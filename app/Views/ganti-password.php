@@ -69,6 +69,7 @@
                                 <small class="text-danger"><?= $errors['confirm_password'] ?? null ?></small>
                             </div>
                         </div>
+                        <?= csrf_field() ?>
 
                         <button class="btn btn-primary">Simpan</button>
                     </form>
@@ -100,6 +101,7 @@
                                 <small class="text-danger"><?= $errors['confirm_pin'] ?? null ?></small>
                             </div>
                         </div>
+                        <?= csrf_field() ?>
 
                         <button class="btn btn-primary">Simpan</button>
                     </form>

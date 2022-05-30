@@ -113,6 +113,8 @@
 
 <script>
     $(document).ready(function() {
+        let csrf_name = '<?= csrf_token() ?>';
+        let csrf_token = '<?= csrf_hash() ?>';
         const selectOperator = $("#tmp #operator").prop('outerHTML');
         const selectStatus = $("#tmp #status").prop('outerHTML');
         const thead = $("#table_produk thead")
@@ -154,7 +156,14 @@
             ajax: {
                 url: "<?= base_url('/produk') ?>",
                 type: "post",
-                dataType: "json"
+                dataType: "json",
+                data: function (data) {
+                    data[csrf_name] = csrf_token;
+                },
+                dataSrc: function (result) {
+                    csrf_token = result[csrf_name];
+                    return result.data;
+                }
             },
             dom: '<"mb-4"<"dt-action-buttons"B>><"d-flex justify-content-between align-items-center mx-1 row"<"col-sm-12 col-md-6"l>>t<"d-flex justify-content-between mx-1 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
             columns: [{

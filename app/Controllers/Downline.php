@@ -30,11 +30,13 @@ class Downline extends BaseController
             $total_downline = $userModel->totalDownline();
             $total_downline_filtered = $userModel->totalDownlineFiltered($search);
             $data_downline = $userModel->dataDownline($search, $offset);
+            $csrf_name = csrf_token();
 
             $data = [
                 "recordsTotal" => $total_downline,
                 "recordsFiltered" => $total_downline_filtered,
-                "data" => $data_downline
+                "data" => $data_downline,
+                "$csrf_name" => csrf_hash()
             ];
 
             return json_encode($data);

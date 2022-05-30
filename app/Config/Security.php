@@ -37,7 +37,7 @@ class Security extends BaseConfig
      *
      * @var string
      */
-    public $tokenName = 'csrf_test_name';
+    public $tokenName = 'sign';
 
     /**
      * --------------------------------------------------------------------------
@@ -48,7 +48,7 @@ class Security extends BaseConfig
      *
      * @var string
      */
-    public $headerName = 'X-CSRF-TOKEN';
+    public $headerName = 'X-SIGN';
 
     /**
      * --------------------------------------------------------------------------
@@ -59,7 +59,7 @@ class Security extends BaseConfig
      *
      * @var string
      */
-    public $cookieName = 'csrf_cookie_name';
+    public $cookieName = 'sign';
 
     /**
      * --------------------------------------------------------------------------

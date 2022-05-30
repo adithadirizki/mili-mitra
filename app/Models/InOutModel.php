@@ -31,8 +31,8 @@ class InOutModel extends Model
 
     public function totalInOutFiltered($filter, $search)
     {
-        $tipeIn = $search['tipe'] !== "" ? "AND 'In' = '{$this->db->escapeString($search['tipe'])}'" : null;
-        $tipeOut = $search['tipe'] !== "" ? "AND 'Out' = '{$this->db->escapeString($search['tipe'])}'" : null;
+        $tipeIn = $search['tipe'] === "" ? null : "AND 'In' = '{$this->db->escapeString($search['tipe'])}'";
+        $tipeOut = $search['tipe'] === "" ? null : "AND 'Out' = '{$this->db->escapeString($search['tipe'])}'";
 
         return $this->db->query("
         SELECT COUNT(tanggal) total_message FROM
@@ -54,8 +54,8 @@ class InOutModel extends Model
 
     public function dataInOut($filter, $search, $offset)
     {
-        $tipeIn = $search['tipe'] !== "" ? "AND 'In' = '{$this->db->escapeString($search['tipe'])}'" : null;
-        $tipeOut = $search['tipe'] !== "" ? "AND 'Out' = '{$this->db->escapeString($search['tipe'])}'" : null;
+        $tipeIn = $search['tipe'] === "" ? null : "AND 'In' = '{$this->db->escapeString($search['tipe'])}'";
+        $tipeOut = $search['tipe'] === "" ? null : "AND 'Out' = '{$this->db->escapeString($search['tipe'])}'";
 
         return $this->db->query("
         SELECT * FROM

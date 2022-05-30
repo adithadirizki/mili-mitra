@@ -50,10 +50,12 @@ class Mutasi extends BaseController
             }
 
             $mutasitModel = new MutasiModel();
-            $data_mutasit = $mutasitModel->dataMutasi($filter);
+            $data_mutasi = $mutasitModel->dataMutasi($filter);
+            $csrf_name = csrf_token();
 
             $data = [
-                "data" => $data_mutasit
+                "data" => $data_mutasi,
+                "$csrf_name" => csrf_hash()
             ];
 
             return json_encode($data);

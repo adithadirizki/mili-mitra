@@ -50,6 +50,7 @@
                     <div class="form-group mb-3">
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+                        <?= csrf_field() ?>
                         <small class="text-danger"><?= $errors['password'] ?? null ?></small>
                     </div>
                     <div class="row">

@@ -67,6 +67,7 @@
                                     <div class="form-group">
                                         <label for="amount">Jumlah (Rp)</label>
                                         <input type="number" name="amount" id="amount" class="form-control" placeholder="Rp" min="50000" max="25000000" required>
+                                        <?= csrf_field() ?>
                                         <small class="text-danger"><?= $errors['amount'] ?></small>
                                     </div>
                                     <button class="btn btn-primary btn-block">Submit</button>

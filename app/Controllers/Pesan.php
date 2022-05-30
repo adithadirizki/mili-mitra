@@ -54,11 +54,13 @@ class Pesan extends BaseController
             $total_message = $messageModel->totalInOut($filter);
             $total_message_filtered = $messageModel->totalInOutFiltered($filter, $search);
             $data_message = $messageModel->dataInOut($filter, $search, $offset);
+            $csrf_name = csrf_token();
 
             $data = [
                 "recordsTotal" => $total_message,
                 "recordsFiltered" => $total_message_filtered,
-                "data" => $data_message
+                "data" => $data_message,
+                "$csrf_name" => csrf_hash()
             ];
 
             return json_encode($data);

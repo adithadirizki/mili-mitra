@@ -34,11 +34,13 @@ class Produk extends BaseController
             $total_product = $productModel->totalProduct();
             $total_product_filtered = $productModel->totalProductFiltered($search);
             $data_product = $productModel->dataProduct($search, $offset);
+            $csrf_name = csrf_token();
 
             $data = [
                 "recordsTotal" => $total_product,
                 "recordsFiltered" => $total_product_filtered,
-                "data" => $data_product
+                "data" => $data_product,
+                "$csrf_name" => csrf_hash()
             ];
 
             return json_encode($data);

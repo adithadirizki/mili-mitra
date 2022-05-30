@@ -58,10 +58,12 @@ class Deposit extends BaseController
             }
 
             $deposittModel = new DepositModel();
-            $data_depositt = $deposittModel->dataDeposit($filter);
+            $data_deposit = $deposittModel->dataDeposit($filter);
+            $csrf_name = csrf_token();
 
             $data = [
-                "data" => $data_depositt
+                "data" => $data_deposit,
+                "$csrf_name" => csrf_hash()
             ];
 
             return json_encode($data);

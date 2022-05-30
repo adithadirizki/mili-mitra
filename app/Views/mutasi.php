@@ -111,7 +111,9 @@
 
 <script>
     $(document).ready(function() {
-        const tableRiwayatDeposit = $("#table_mutasi").on('processing.dt', function(e, settings, processing) {
+        let csrf_name = '<?= csrf_token() ?>';
+        let csrf_token = '<?= csrf_hash() ?>';
+        const tableMutasi = $("#table_mutasi").on('processing.dt', function(e, settings, processing) {
             processing ? $('#loader').show() : $('#loader').hide();
         }).DataTable({
             responsive: true,
@@ -132,6 +134,11 @@
                         tgl_awal: $("#tgl-awal").val() === "" ? null : $("#tgl-awal").val(),
                         tgl_akhir: $("#tgl-akhir").val() === "" ? null : $("#tgl-akhir").val()
                     }
+                    data[csrf_name] = csrf_token;
+                },
+                dataSrc: function (result) {
+                    csrf_token = result[csrf_name];
+                    return result.data;
                 }
             },
             dom: '<"mb-4"<"dt-action-buttons"B>><"d-flex justify-content-between align-items-center mx-1 row"<"col-sm-12 col-md-6"l>>t<"d-flex justify-content-between mx-1 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
@@ -178,7 +185,7 @@
 
         $(document).on('submit', '#filter', (e) => {
             e.preventDefault();
-            tableRiwayatDeposit.ajax.reload();
+            tableMutasi.ajax.reload();
             return false;
         })
     })

@@ -57,9 +57,11 @@ class Transaksi extends BaseController
 
             $transaksiModel = new TransaksiModel();
             $data_transaksi = $transaksiModel->dataTransaction($filter, $search);
+            $csrf_name = csrf_token();
 
             $data = [
-                "data" => $data_transaksi
+                "data" => $data_transaksi,
+                "$csrf_name" => csrf_hash()
             ];
 
             return json_encode($data);

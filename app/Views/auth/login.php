@@ -43,15 +43,15 @@
 
                 <form action="<?= base_url('/auth/login') ?>" method="post">
                     <div class="form-group mb-3">
-                        <label for="userid">User ID</label>
-                        <input type="text" name="userid" id="userid" class="form-control" placeholder="User ID" autofocus required>
-                        <small class="text-danger"><?= $errors['userid'] ?? null ?></small>
+                        <label for="hp">HP</label>
+                        <input type="text" name="hp" id="hp" class="form-control" placeholder="HP" autofocus required>
+                        <small class="text-danger"><?= $errors['hp'] ?? null ?></small>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+                        <label for="pin">PIN</label>
+                        <input type="password" name="pin" id="pin" class="form-control" placeholder="PIN" minlength="4" maxlength="4" required>
                         <?= csrf_field() ?>
-                        <small class="text-danger"><?= $errors['password'] ?? null ?></small>
+                        <small class="text-danger"><?= $errors['pin'] ?? null ?></small>
                     </div>
                     <div class="row">
                         <div class="col-8">

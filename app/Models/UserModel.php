@@ -18,11 +18,7 @@ class UserModel extends Model
 
     public function findUser($hp, $pin)
     {
-        $no = $hp * 1;
-        $this->groupStart();
         $this->where('hp', $hp);
-        $this->orWhere('hp', $no);
-        $this->groupEnd();
         $this->where('pin', $pin);
         return $this->get()->getFirstRow();
     }

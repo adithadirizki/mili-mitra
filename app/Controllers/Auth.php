@@ -21,13 +21,21 @@ class Auth extends BaseController
             return view('auth/login', $data);
         } elseif ($method === "post") {
             $isValidRules = $this->validate([
-                "userid" => [
-                    "label" => "User ID",
+                "hp" => [
+                    "label" => "No HP",
                     "rules" => "required",
+                    "errors" => [
+                        "required" => "{field} harus diisi."
+                    ]
                 ],
-                "password" => [
-                    "label" => "Password",
-                    "rules" => "required"
+                "pin" => [
+                    "label" => "PIN",
+                    "rules" => "required|numeric|exact_length[4]",
+                    "errors" => [
+                        "required" => "{field} harus diisi.",
+                        "numeric" => "{field} harus berupa angka.",
+                        "exact_length" => "{field} harus berisi 4 digit."
+                    ]
                 ]
             ]);
 
@@ -38,16 +46,16 @@ class Auth extends BaseController
                 return redirect()->back();
             }
 
-            $userid = $this->request->getPost("userid");
-            $password = $this->request->getPost("password");
+            $hp = $this->request->getPost("hp");
+            $pin = $this->request->getPost("pin");
 
             $userModel = new UserModel();
-            $user = $userModel->findUser($userid, $password);
+            $user = $userModel->findUser($hp, $pin);
 
-            if (!$user) {
+            if (!$user || (int) $user->status !== 1) {
                 $session->setFlashdata("message", [
                     "status" => false,
-                    "text" => "User ID atau Password salah."
+                    "text" => "No HP atau PIN salah."
                 ]);
                 return redirect()->back();
             }

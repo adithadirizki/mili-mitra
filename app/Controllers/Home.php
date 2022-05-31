@@ -76,7 +76,7 @@ class Home extends BaseController
         ];
 
         foreach ($week as $value) {
-            $index = array_search($value->dayofweek, $daysofweek);
+            $index = array_search($value->dayofweek - 1, $daysofweek);
             $transaction['oneWeek']['sum'][$index] = $value->sum;
             $transaction['oneWeek']['total'][$index] = $value->total;
         }

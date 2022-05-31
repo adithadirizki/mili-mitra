@@ -16,8 +16,12 @@
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
-            <div class="card-header text-center">
-                <h1><b><?= env('app.name') ?></b></h1>
+            <div class="text-center p-3">
+                <img src="<?= base_url('dist/img/mili.jpg') ?>" alt="Mili" class="img-fluid">
+                <small class="font-weight-bold text-center m-0">Jendela Pulsa Indonesia</small>
+            </div>
+            <div class="card-header text-center p-0">
+                <h1 class="m-0"><b><?= env('app.name') ?></b></h1>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Silahkan login untuk masuk ke dashboard</p>

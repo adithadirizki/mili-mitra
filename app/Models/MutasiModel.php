@@ -27,7 +27,7 @@ class MutasiModel extends Model
         $this->where('agenid', $this->agenid);
         $this->groupEnd();
         if ($tgl_awal && $tgl_akhir)
-            $this->where("DATE_FORMAT(tanggal, '%Y-%m-%d') BETWEEN '{$tgl_awal}' AND '{$tgl_akhir}'");
+            $this->where("tanggal BETWEEN '{$tgl_awal}' AND '{$tgl_akhir}'");
         $this->orderBy("id", "desc");
         return $this->get()->getResult();
     }

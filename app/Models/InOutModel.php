@@ -19,11 +19,11 @@ class InOutModel extends Model
         SELECT COUNT(tanggal) total_message FROM
         (
             SELECT in_starttime tanggal FROM inbox_read 
-            WHERE agenid = '{$this->agenid}' AND DATE_FORMAT(in_starttime, '%Y-%m-%d') BETWEEN '{$this->db->escapeString($filter['tgl_awal'])}' 
+            WHERE agenid = '{$this->agenid}' AND in_starttime BETWEEN '{$this->db->escapeString($filter['tgl_awal'])}' 
             AND '{$this->db->escapeString($filter['tgl_akhir'])}'
             UNION ALL 
             SELECT out_starttime tanggal FROM outbox_read
-            WHERE agenid = '{$this->agenid}' AND DATE_FORMAT(out_starttime, '%Y-%m-%d') BETWEEN '{$this->db->escapeString($filter['tgl_awal'])}' 
+            WHERE agenid = '{$this->agenid}' AND out_starttime BETWEEN '{$this->db->escapeString($filter['tgl_awal'])}' 
             AND '{$this->db->escapeString($filter['tgl_akhir'])}'
         ) AS message
         ")->getFirstRow()->total_message;
@@ -40,13 +40,13 @@ class InOutModel extends Model
             SELECT in_starttime tanggal FROM inbox_read 
             WHERE agenid = '{$this->agenid}' AND in_message LIKE '%{$this->db->escapeLikeString($search['pesan'])}%' 
             $tipeIn
-            AND DATE_FORMAT(in_starttime, '%Y-%m-%d') BETWEEN '{$this->db->escapeString($filter['tgl_awal'])}' 
+            AND in_starttime BETWEEN '{$this->db->escapeString($filter['tgl_awal'])}' 
             AND '{$this->db->escapeString($filter['tgl_akhir'])}'
             UNION ALL 
             SELECT out_starttime tanggal FROM outbox_read
             WHERE agenid = '{$this->agenid}' AND out_message LIKE '%{$this->db->escapeLikeString($search['pesan'])}%' 
             $tipeOut
-            AND DATE_FORMAT(out_starttime, '%Y-%m-%d') BETWEEN '{$this->db->escapeString($filter['tgl_awal'])}' 
+            AND out_starttime BETWEEN '{$this->db->escapeString($filter['tgl_awal'])}' 
             AND '{$this->db->escapeString($filter['tgl_akhir'])}'
         ) AS message
         ")->getFirstRow()->total_message;
@@ -63,13 +63,13 @@ class InOutModel extends Model
             SELECT in_starttime tanggal, 'In' tipe, in_message pesan FROM inbox_read 
             WHERE agenid = '{$this->agenid}' AND in_message LIKE '%{$this->db->escapeLikeString($search['pesan'])}%' 
             $tipeIn
-            AND DATE_FORMAT(in_starttime, '%Y-%m-%d') BETWEEN '{$this->db->escapeString($filter['tgl_awal'])}' 
+            AND in_starttime BETWEEN '{$this->db->escapeString($filter['tgl_awal'])}' 
             AND '{$this->db->escapeString($filter['tgl_akhir'])}'
             UNION ALL 
             SELECT out_starttime tanggal, 'Out' tipe, out_message pesan FROM outbox_read
             WHERE agenid = '{$this->agenid}' AND out_message LIKE '%{$this->db->escapeLikeString($search['pesan'])}%' 
             $tipeOut
-            AND DATE_FORMAT(out_starttime, '%Y-%m-%d') BETWEEN '{$this->db->escapeString($filter['tgl_awal'])}' 
+            AND out_starttime BETWEEN '{$this->db->escapeString($filter['tgl_awal'])}' 
             AND '{$this->db->escapeString($filter['tgl_akhir'])}'
         ) AS message
         ORDER BY tanggal DESC

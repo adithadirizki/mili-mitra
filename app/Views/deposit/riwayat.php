@@ -59,11 +59,11 @@
                     <div>
                         <div class="d-inline-block form-group">
                             <label for="tgl-awal">Tanggal Awal</label>
-                            <input type="date" name="tgl_awal" class="form-control" id="tgl-awal" placeholder="Tgl Mulai" required>
+                            <input type="date" name="tgl_awal" class="form-control" id="tgl-awal" value="<?= date('Y-m-d') ?>" min="<?= date('Y-m-d', strtotime('-30 day')) ?>" max="<?= date('Y-m-d') ?>" placeholder="Tgl Mulai" required>
                         </div>
                         <div class="d-inline-block form-group ml-2">
                             <label for="tgl-akhir">Tanggal Akhir</label>
-                            <input type="date" name="tgl_akhir" class="form-control" id="tgl-akhir" placeholder="Tgl Akhir" required>
+                            <input type="date" name="tgl_akhir" class="form-control" id="tgl-akhir" value="<?= date('Y-m-d') ?>" min="<?= date('Y-m-d', strtotime('-30 day')) ?>" max="<?= date('Y-m-d') ?>" placeholder="Tgl Akhir" required>
                         </div>
                         <div class="d-inline-block ml-2">
                             <label for="status">Status</label>

@@ -28,7 +28,7 @@ class DepositModel extends Model
         $this->groupEnd();
         $filter['status'] === "" ? null : $this->where("status", $filter['status']);
         if ($tgl_awal && $tgl_akhir)
-            $this->where("DATE_FORMAT(tanggal, '%Y-%m-%d') BETWEEN '{$tgl_awal}' AND '{$tgl_akhir}'");
+            $this->where("tanggal BETWEEN '{$tgl_awal}' AND '{$tgl_akhir}'");
         $this->orderBy("id", "desc");
         return $this->get()->getResult();
     }

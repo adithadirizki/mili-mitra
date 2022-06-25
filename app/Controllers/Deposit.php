@@ -44,6 +44,22 @@ class Deposit extends BaseController
                 ]
             ]);
 
+            $filter = $_POST['filter'];
+            $tgl_awal = $filter['tgl_awal'];
+            $tgl_akhir = $filter['tgl_akhir'];
+
+            $max_start = date('Y-m-d', strtotime('-30 day'));
+            $max_end = date('Y-m-d');
+
+            if ($tgl_awal < $max_start || $tgl_awal > $max_end) {
+                $this->validator->setError('filter.tgl_awal', 'Tanggal tidak valid.');
+                $isValidRules = false;
+            }
+            if ($tgl_akhir < $max_start || $tgl_akhir > $max_end) {
+                $this->validator->setError('filter.tgl_akhir', 'Tanggal tidak valid.');
+                $isValidRules = false;
+            }
+
             if (!$isValidRules) {
                 return json_encode(['errors' => $this->validator->getErrors()]);
             }

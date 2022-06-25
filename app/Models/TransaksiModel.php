@@ -56,25 +56,41 @@ class TransaksiModel extends Model
     {
         $tgl_awal = $filter['tgl_awal'];
         $tgl_akhir = $filter['tgl_akhir'];
+        $time_awal = strtotime($tgl_awal);
+        $time_akhir = strtotime($tgl_akhir);
+        $ym_awal = date('ym', $time_awal);
+        $ym_akhir = date('ym', $time_akhir);
 
-        $this->join('voucher', 'voucher.vtype = log_purchase.vtype');
-        $this->select("tanggal, id, voucher.vtype kode_produk, voucher.opr operator, tujuan, harga, log_purchase.status, vsn sn, ref");
-        $this->groupStart();
-        $this->where('agenid', $this->agenid);
-        $this->groupEnd();
-        $search['id'] === "" ? null :
-            $this->where("id", $search['id']);
-        $search['kode_produk'] === "" ? null :
-            $this->where("voucher.vtype", $search['kode_produk']);
-        $search['operator'] === "" ? null :
-            $this->where("voucher.opr", $search['operator']);
-        $search['tujuan'] === "" ? null :
-            $this->where("tujuan", $search['tujuan']);
-        $search['status'] === "" ? null :
-            $this->where("log_purchase.status", $search['status']);
-        if ($tgl_awal && $tgl_akhir)
-            $this->where("DATE_FORMAT(tanggal, '%Y-%m-%d') BETWEEN '{$tgl_awal}' AND '{$tgl_akhir}'");
-        $this->orderBy("id", "desc");
-        return $this->get()->getResult();
+        $queries = [];
+        $db = \Config\Database::connect();
+
+        while ($time_akhir >= $time_awal) {
+            $ym_akhir = date('ym', $time_akhir);
+
+            $builder = $db->table("log_purchase_$ym_akhir");
+            $builder->select("tanggal, id, vtype, tujuan, harga, status, vsn, ref");
+            $builder->where("tanggal between '$tgl_awal' and '$tgl_akhir'");
+
+            $queries[] = $builder->getCompiledSelect();
+
+            $time_akhir = strtotime('-1 month', $time_akhir);
+        }
+
+        $where = [];
+        $search['id'] === "" ? null : $where[] = "id = '{$this->db->escapeString($search['id'])}'";
+        $search['kode_produk'] === "" ? null : $where[] = "kode_produk = '{$this->db->escapeString($search['kode_produk'])}'";
+        $search['operator'] === "" ? null : $where[] = "operator = '{$this->db->escapeString($search['operator'])}'";
+        $search['tujuan'] === "" ? null : $where[] = "tujuan = '{$this->db->escapeString($search['tujuan'])}'";
+        $search['status'] === "" ? null : $where[] = "status = '{$this->db->escapeString($search['status'])}'";
+        
+        if (count($where) > 0) {
+            $where = implode(' and ', $where);
+            $where = "where $where";
+        } else {
+            $where = "";
+        }
+
+        $union = implode(' union ', $queries);
+        return $db->query("select tanggal, id, voucher.vtype kode_produk, voucher.opr operator, tujuan, harga, t1.status, vsn sn, ref from ($union) as t1 inner join voucher on voucher.vtype = t1.vtype $where order by tanggal desc")->getResult();
     }
 }
